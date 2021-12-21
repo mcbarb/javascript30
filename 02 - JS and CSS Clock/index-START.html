@@ -62,12 +62,124 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.2s cubic-bezier(0.71, 2.38, 0.58, 1);
+    }
+
+    .no-transition {
+      transition: none !important;
+    }
+
+    .hour-hand {
+      background-color: blue;
+    }
+
+    .second-hand {
+      background-color: green;
+    }
+
+    .min-hand {
+      background-color: yellow;
     }
 
   </style>
 
   <script>
+    const secHand = document.querySelector('.second-hand');
+    const minHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
 
+    var prevHour = -1;
+    var prevMin = -1;
+
+    // For testing
+    const initNow = new Date();
+    var offsetHours = 11 - initNow.getHours();
+    var offsetMinutes = 59 - initNow.getMinutes();
+    offsetHours = 0;   // Comment for test; uncomment for production
+    // offsetMinutes = 0; // Comment for test; uncomment for production
+
+    function initClock () {
+      secHand.classList.add('no-transition');
+      minHand.classList.add('no-transition');
+      hourHand.classList.add('no-transition');
+    }
+    
+    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+    const resetSecFlip = async (latestNow) => {
+      const seconds = latestNow.getSeconds();
+      if (seconds == 59) {
+        await sleep(250);
+        secHand.classList.add('no-transition');
+        secHand.style.transform = `rotate(${-1 / 60 * 360 + 90}deg)`;
+        await sleep(150);
+        secHand.classList.remove('no-transition');
+      }
+    }
+
+    const resetMinFlip = async (latestNow) => {
+      const minutes = latestNow.getMinutes();
+      if (minutes == 59) {
+        await sleep(250);
+        minHand.classList.add('no-transition');
+        minHand.style.transform = `rotate(${-1 / 60 * 360 + 90}deg)`;
+        await sleep(150);
+        minHand.classList.remove('no-transition');
+      }
+    }
+
+    const resetHourFlip = async (latestNow) => {
+      const hours = latestNow.getHours() % 12;
+      if (hours == 11) {
+        await sleep(250);
+        hourHand.classList.add('no-transition');
+        hourHand.style.transform = `rotate(${-1 / 12 * 360 + 90}deg)`;
+        await sleep(150);
+        hourHand.classList.remove('no-transition');
+      }
+    }
+
+    function setClock() {
+      const now = new Date();
+      now.setHours(now.getHours() + offsetHours);
+      now.setMinutes(now.getMinutes() + offsetMinutes);
+
+      seconds = now.getSeconds();
+      const secDegrees = seconds / 60 * 360 + 90
+      secHand.style.transform = `rotate(${secDegrees}deg)`;
+      resetSecFlip(now);
+      
+      minutes = now.getMinutes();
+      const minDegrees = minutes / 60 * 360 + 90;
+      if (prevMin !== minutes){
+        minHand.style.transform = `rotate(${minDegrees}deg)`;
+        resetMinFlip(now);
+        prevMin = minutes;
+      }
+
+      hours = now.getHours();
+      const hourDegrees = (hours % 12) / 12 * 360 + 90;
+      if (prevHour !== hours) {
+        hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+        resetHourFlip(now);
+        prevHour = hours;
+      } 
+    }
+
+    function initClock() {
+      secHand.classList.add('no-transition');
+      minHand.classList.add('no-transition');
+      hourHand.classList.add('no-transition');
+      setClock();
+      secHand.classList.remove('no-transition');
+      minHand.classList.remove('no-transition');
+      hourHand.classList.remove('no-transition');
+    }
+    
+    initClock();
+    setInterval(setClock, 1000);
 
   </script>
 </body>
