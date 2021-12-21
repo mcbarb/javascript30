@@ -74,8 +74,17 @@
   const minsHand = document.querySelector('.min-hand');
   const hourHand = document.querySelector('.hour-hand');
 
+  // For testing
+  // const initNow = new Date();
+  // var offsetHours = 11 - initNow.getHours();
+  // var offsetMinutes = 59 - initNow.getMinutes();
+  // offsetHours = 0;   // Comment for test; uncomment for production
+  // offsetMinutes = 0; // Comment for test; uncomment for production
+
   function setDate() {
     const now = new Date();
+    // now.setHours(now.getHours() + offsetHours);
+    // now.setMinutes(now.getMinutes() + offsetMinutes);
 
     const seconds = now.getSeconds();
     const secondsDegrees = ((seconds / 60) * 360) + 90;
