@@ -1,13 +1,13 @@
 ﻿![](https://javascript30.com/images/JS3-social-share.png)
 
 # JavaScript30
-## by Marcelo Castro Barbosa
 
-Starter Files + Completed solutions for the JavaScript 30 Day Challenge by Wes Bos
-Alternative Completed solutions by Marcelo
+* Starter Files + Completed solutions for the JavaScript 30 Day Challenge by Wes Bos
+* Alternative Completed solutions by Marcelo Castro Barbosa
 
-Grab the course at [https://JavaScript30.com](https://JavaScript30.com)
-Original github at [https://github.com/wesbos/JavaScript30](https://github.com/wesbos/JavaScript30)
+## Links
+* Grab the course at [https://JavaScript30.com](https://JavaScript30.com)
+* Original github at [https://github.com/wesbos/JavaScript30](https://github.com/wesbos/JavaScript30)
 <!-- ## Community #JavaScript30 Content
 
 Feel free to submit a PR adding a link to your own recaps, guides or reviews!
