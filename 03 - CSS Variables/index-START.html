@@ -25,6 +25,17 @@
     /*
       misc styles, nothing to do with CSS variables
     */
+    :root {
+      --base: red;
+      --blur: 10px;
+      --spacing: 10px;
+    }
+
+    img {
+      padding: var(--spacing);
+      background-color: var(--base);
+      filter: blur(var(--blur));
+    }
 
     body {
       text-align: center;
@@ -45,6 +56,17 @@
   </style>
 
   <script>
+    const controls = document.querySelectorAll('.controls input');
+
+    function doSomething() {
+      // console.log(this.value);
+      const suffix = this.dataset.sizing || '';
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
+      console.log(suffix);
+    }
+
+    controls.forEach(input => input.addEventListener('change',doSomething));
+    controls.forEach(input => input.addEventListener('mousemove',doSomething));
   </script>
 
 </body>
