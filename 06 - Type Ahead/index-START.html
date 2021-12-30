@@ -24,9 +24,46 @@ const load = fetch(endpoint)
 
 function findMatches(wordToMatch, cities) {
   const regex = new RegExp(wordToMatch,'gi');
-  const matches = cities.filter(item => item.city.match(regex));
+  const matches = cities.filter(item => item.city.match(regex) || item.state.match(regex));
   return matches;
 }
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const search = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+
+function highlight(text, textToHighlight) {
+  const regex = new RegExp(textToHighlight,'gi');
+return text.replace(regex, `<span class="hl">${textToHighlight}</span>`)
+}
+
+function displayMatched() {
+  if (this.value === "") {
+    html = `
+    <li>Filter for a city</li>
+    <li>or a state</li>
+    `
+  } else {
+    const matches = findMatches(this.value, cities);
+    html = matches.map(match => `
+    <li>
+      <span class="name"">
+        ${highlight(match.city, this.value)}, ${highlight(match.state, this.value)}
+        </span>
+        <span class="population">
+          ${numberWithCommas(match.population)}
+          </span>
+          </li>
+          `).join('');
+  }
+          suggestions.innerHTML = html;
+}
+
+search.addEventListener('change', displayMatched);
+search.addEventListener('keyup', displayMatched);
 
 // test
 // wrong way to call this function
@@ -37,18 +74,6 @@ if (load.ok) {
 }
 // right way to call this function, otherwise findmatches may be called before the data is loaded
 load.then(_ => console.log(findMatches('New',cities)));
-
-const search = document.querySelector('.search');
-const suggestions = document.querySelector('.suggestions');
-
-function displayMatched() {
-  const matches = findMatches(this.value, cities);
-  html = matches.map(match => `<li>${match.city}, ${match.state}</li>`).join('')
-  suggestions.innerHTML = html;
-}
-
-search.addEventListener('change', displayMatched);
-search.addEventListener('upkey', displayMatched);
 
 </script>
 </body>
