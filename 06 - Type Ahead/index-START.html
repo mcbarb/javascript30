@@ -17,6 +17,59 @@
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
+const cities = [];
+// const prom = fetch(endpoint);
+// const promBlob = prom.then(blob => blob.json());
+// const promData = promBlob.then(data => cities.push(...data));
+// const promLetUsKnow = promData.then(_ => console.log("finished!"));
+const load = fetch(endpoint)
+  .then(blob => blob.json())
+  .then(data => cities.push(...data));
+
+// function findMatches(wordToFind, cities) {
+//   const regex = new RegExp(wordToFind,'gi');
+//   const matches = cities.filter(item => item.city.match(regex));
+//   return matches;
+// }
+
+function findMatches(wordToMatch, cities) {
+  return cities.filter(place => {
+    // here we need to figure out if the city or state matches what was searched
+    const regex = new RegExp(wordToMatch, 'gi');
+    return place.city.match(regex) || place.state.match(regex)
+  });
+}
+
+if (load.ok) {
+  console.log(findMatches('New',cities))
+} else { 
+  console.log('unable to print')
+}
+
+load.then(_ => console.log(findMatches('New',cities)));
+// console.log(cities.filter(item => item.city.match(testregex)));
+
+// console.log('Western Indiana'.match(testregex));
+
+// const search = document.querySelector('.search');
+// const suggestions = document.querySelector('.suggestions');
+
+
+
+// function displayMatched() {
+//   const matches = findMatches(this.value, cities);
+//   console.log(this.value);
+// }
+
+// search.addEventListener('change', displayMatched);
+
+// const testregex = new RegExp('new','gi');
+// console.log(testregex);
+// console.log(cities);
+// cities.reduce((count, item) => {(count < 10) ? console.log(item.city) : console.log('')}, 0);
+
+// console.log(cities);
+
 </script>
 </body>
 </html>
