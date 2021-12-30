@@ -27,15 +27,39 @@
     // Some and Every Checks
     // Array.prototype.some() // is at least one person 19 or older?
     // Array.prototype.every() // is everyone 19 or older?
+    const currentYear = new Date().getFullYear();
+    const peopleAges = people.map(person => currentYear - person.year);
+    const isSomeAdult = peopleAges.some(age => age >= 19);
+    const isEveryoneAdult = peopleAges.every(age => age >= 19);
+    console.log(`is at least one person 19 or older? ${isSomeAdult}`);
+    console.log(`is everyone 19 or older? ${isEveryoneAdult}`);
+
+    // Start of work with comments
+    console.table(comments);
 
     // Array.prototype.find()
     // Find is like filter, but instead returns just the one you are looking for
     // find the comment with the ID of 823423
-
+    const givenComment = comments.find(comment => comment.id === 823423);
+    console.log(`find the comment with the ID of 823423: ${JSON.stringify(givenComment)}`);
+    
     // Array.prototype.findIndex()
     // Find the comment with this ID
     // delete the comment with the ID of 823423
+    const givenIndex = comments.findIndex(comment => comment.id === 823423);
+    console.log(`find the comment's INDEX with the ID of 823423: ${JSON.stringify(givenComment)}`);
+    
+    console.log('Using slice, new array:');
+    const shorterComments = [
+      ...comments.slice(0, givenIndex),
+      ...comments.slice(givenIndex+1)
+    ]
+    console.table(shorterComments);
 
+    console.log('Using splice, in place:');
+    comments.splice(givenIndex, 1);
+    console.table(comments);
+    
   </script>
 </body>
 </html>
