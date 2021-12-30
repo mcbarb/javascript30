@@ -35,28 +35,20 @@ if (load.ok) {
 } else { 
   console.log('unable to print')
 }
-
 // right way to call this function, otherwise findmatches may be called before the data is loaded
 load.then(_ => console.log(findMatches('New',cities)));
 
-// const search = document.querySelector('.search');
-// const suggestions = document.querySelector('.suggestions');
+const search = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
 
+function displayMatched() {
+  const matches = findMatches(this.value, cities);
+  html = matches.map(match => `<li>${match.city}, ${match.state}</li>`).join('')
+  suggestions.innerHTML = html;
+}
 
-
-// function displayMatched() {
-//   const matches = findMatches(this.value, cities);
-//   console.log(this.value);
-// }
-
-// search.addEventListener('change', displayMatched);
-
-// const testregex = new RegExp('new','gi');
-// console.log(testregex);
-// console.log(cities);
-// cities.reduce((count, item) => {(count < 10) ? console.log(item.city) : console.log('')}, 0);
-
-// console.log(cities);
+search.addEventListener('change', displayMatched);
+search.addEventListener('upkey', displayMatched);
 
 </script>
 </body>
