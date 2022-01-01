@@ -32,7 +32,7 @@
   let isDrawing = false;
   let lastX = 0;
   let lastY = 0;
-  let rainbow = false;
+  let rainbow = true;
   let hue = 0;
   let width = 1;
   let direction = true;
@@ -58,16 +58,19 @@
   }
 
   function updateColor() {
+    console.log('Function *updateColor* was called.')
     const backgroundColor = window.getComputedStyle( this ,null).getPropertyValue('background-color');
     console.log(backgroundColor);
     if (backgroundColor === 'rgba(0, 0, 0, 0)') {
       console.log('toggle rainbow true')
       rainbow = true;
-    } else if (rainbow) {
+    } else {
       ctx.strokeStyle = backgroundColor;
       ctx.lineWidth = 1;
-      rainbow = false;
-      console.log('toggle rainbow false')
+      if (rainbow) {
+        rainbow = false;
+        console.log('toggle rainbow false')
+      }
     }
   }
 
