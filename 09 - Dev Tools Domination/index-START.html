@@ -6,10 +6,10 @@
 </head>
 <body>
 
-  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+  <p class="see you later" onClick="makeGreen()">×BREAK×DOWN×</p>
 
   <script>
-    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+    const dogs = [{ name: 'Snickers', age: 2, breed: 'pastor' }, { name: 'hugo', age: 8 , breed: 'vira lata'}, { name: 'Cacau', age : 1, breed: 'vizla'}];
 
     function makeGreen() {
       const p = document.querySelector('p');
@@ -18,28 +18,70 @@
     }
 
     // Regular
+    console.log("Hello!");
 
     // Interpolated
+    console.log('Hello %s', 'marcelo');
 
     // Styled
+    console.log('%cHellow World','background-color: red; font-size:30px;');
 
     // warning!
+    console.warn("warning!");
 
     // Error :|
+    console.error("error");
 
     // Info
+    console.info("any information");
 
     // Testing
+    console.assert(1===1, "assertion worked");
+    console.assert(1===2, "assertion failed");
 
     // clearing
+    console.clear();
 
     // Viewing DOM Elements
+    const firstP = document.querySelector('p');
+    console.dir(firstP);
 
     // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(`${dog.name}`);
+      console.log(`Name: ${dog.name}`);
+      console.log(`Age: ${dog.age}`);
+      console.log(`Breed: ${dog.breed}`);
+      console.groupEnd((`${dog.name}`));
+    })
 
     // counting
-
+    console.count('Marcelo');
+    console.count('Marcelo');
+    console.count('Marcelo');
+    console.count('Marcelo');
+    console.count('Marcelo');
+    console.count('Gabriela');
+    console.count('Gabriela');
+    console.count('Gabriela');
+    console.count('Marcelo');
+    console.count('Gabriela');
+    console.count('Cacau');
+    console.count('Cacau');
+    console.count('Olivia');
+    console.count('Cacau');
+    
     // timing
+    console.time('fetching data');
+    fetch('https://api.github.com/users/mcbarb')
+      .then(data => data.json())
+      .then(json => {
+        console.timeEnd('fetching data');
+        console.log(json);
+      })
+
+    // table
+    console.table(dogs);
 
   </script>
 </body>
