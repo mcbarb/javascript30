@@ -6,12 +6,147 @@
 </head>
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
+<divn class='color-pallete'>
+  <ul>
+    <li class='color1'></li>
+    <li class='color2'></li>
+    <li class='color3'></li>
+    <li class='color4'></li>
+    <li class='color5'></li>
+    <li class='color6'></li>
+    <li class='color7'></li>
+  </ul>
+</div>
 <script>
+  const canvas = document.querySelector('#draw');
+  const collorPallete = document.querySelector('.color-pallete');
+  const colors = collorPallete.querySelectorAll('li');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.heigh = window.innerHeight;
+  ctx.strokeStyle = 'black';
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.lineWidth = 1;
+
+  let isDrawing = false;
+  let lastX = 0;
+  let lastY = 0;
+  let rainbow = false;
+  let hue = 0;
+  let width = 1;
+  let direction = true;
+
+  function RGBToHex(rgb) {
+    // Choose correct separator
+    let sep = rgb.indexOf(",") > -1 ? "," : " ";
+    // Turn "rgb(r,g,b)" into [r,g,b]
+    rgb = rgb.substr(4).split(")")[0].split(sep);
+
+    let r = (+rgb[0]).toString(16),
+        g = (+rgb[1]).toString(16),
+        b = (+rgb[2]).toString(16);
+
+    if (r.length == 1)
+      r = "0" + r;
+    if (g.length == 1)
+      g = "0" + g;
+    if (b.length == 1)
+      b = "0" + b;
+
+    return "#" + r + g + b;
+  }
+
+  function updateColor() {
+    const backgroundColor = window.getComputedStyle( this ,null).getPropertyValue('background-color');
+    console.log(backgroundColor);
+    if (backgroundColor === 'rgba(0, 0, 0, 0)') {
+      console.log('toggle rainbow true')
+      rainbow = true;
+    } else if (rainbow) {
+      ctx.strokeStyle = backgroundColor;
+      ctx.lineWidth = 1;
+      rainbow = false;
+      console.log('toggle rainbow false')
+    }
+  }
+
+  function draw(e) {
+    if (!isDrawing) return;
+    // console.log(e);
+    if (rainbow) {
+      ctx.strokeStyle = `hsl(${hue},100%, 50%)`;
+      hue++;
+      if (hue >= 360) {
+        hue = 0;
+      }
+      ctx.lineWidth = width;
+      direction ? width++ : width--;
+      if (width >= 50 || width <=0) {
+        direction = !direction;
+      }
+    }
+    ctx.beginPath();
+    ctx.moveTo(lastX,lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    [lastX, lastY] = [e.offsetX, e.offsetY]
+    
+  }
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mousedown', (e) => {isDrawing = true; [lastX, lastY] = [e.offsetX, e.offsetY]});
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+  colors.forEach(color => color.addEventListener('mousedown',updateColor));
 </script>
 
 <style>
   html, body {
     margin: 0;
+  }
+  .color-pallete {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50px;
+    padding: 0;
+    margin:0;
+    border: black 1px solid;
+  }
+  
+  .color-pallete ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  .color-pallete li {
+    margin:5px;
+    min-height: 10px;
+  }
+
+  .color1 {
+    background-color: black;
+  }
+  .color2 {
+    background-color: blue;
+  }
+  .color3 {
+    background-color: green;
+  }
+  .color4 {
+    background-color: red;
+  }
+  .color5 {
+    background-color: orange;
+  }
+  .color6 {
+    background-color: pink;
+  }
+  .color7 {
+    /* background-color: white; */
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+    border: 0.5px solid black;
   }
 </style>
 
