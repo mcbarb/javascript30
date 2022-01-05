@@ -7,6 +7,21 @@
 </head>
 <body>
 <script>
+  const pressed = [];
+  const secret = 'marcelo'
+
+  function handleKeyUp(e) {
+    // console.log(e.key);
+    pressed.push(e.key);
+    pressed.splice(-secret.length -1, pressed.length - secret.length);
+    if (pressed.join('') === secret) {
+      console.log('DING DING')
+      cornify_add();
+    }
+    // console.log(pressed);
+  }
+
+  window.addEventListener('keyup', handleKeyUp);
 </script>
 </body>
 </html>
