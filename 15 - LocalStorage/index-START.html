@@ -53,9 +53,11 @@
 
   function toggleDone(e) {
     if (!e.target.matches('input')) return;
-    console.log(e.target);
-    // console.log(this);
-
+    const el = e.target;
+    const index = el.dataset.index;
+    items[index].done = !items[index].done;
+    localStorage.setItem('items', JSON.stringify(items));
+    console.log(items);
   }
 
   populateList(items, itemsList);
