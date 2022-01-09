@@ -29,7 +29,7 @@
   const addItemButton = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
   const addItems = document.querySelector('[type="submit"]');
-  const items = [{text: "tacos", done: true}, {text: "fish", done: false}];
+  const items = JSON.parse(localStorage.getItem('items')) || [];
 
   function populateList(plates = [], platesList) {
     platesList.innerHTML = plates.map( (plate, i) => `<li>
@@ -47,13 +47,11 @@
     }
     items.push(item);
     populateList(items, itemsList);
-    // console.log(e);
+    localStorage.setItem('items',JSON.stringify(items));
     this.reset();
   }
 
   populateList(items, itemsList);
-
-  
   
   addItemButton.addEventListener('submit', addItem);
 
