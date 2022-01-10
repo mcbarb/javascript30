@@ -25,10 +25,13 @@
     </form>
   </div>
 
+  <div id='reset'>Reset!</div>
+
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
   const items = JSON.parse(localStorage.getItem('items')) || [];
+  const reset = document.getElementById('reset');
 
   function populateList(plates = [], platesList) {
     platesList.innerHTML = plates.map( (plate, i) => `
@@ -60,10 +63,19 @@
     console.log(items);
   }
 
+  function resetItems() {
+    localStorage.removeItem('items');
+    window.alert('Reset!'); 
+    location.reload();
+    // populateList(items, itemsList);
+    // items = [ ];
+  }
+
   populateList(items, itemsList);
   
   addItems.addEventListener('submit', addItem);
   itemsList.addEventListener('click', toggleDone);
+  reset.addEventListener('click', resetItems);
 
 </script>
 

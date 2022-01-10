@@ -79,3 +79,11 @@ h2 {
   outline: 0;
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
+
+#reset {
+  display: block;
+  margin-top: 50px;
+  color: yellow;
+}
+
+
