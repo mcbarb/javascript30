@@ -177,11 +177,28 @@
     <li data-time="1:56">
       Video 57
     </li>
-    <li data-time="4:04">
+    <li data-time="4:05">
       Video 58
     </li>
   </ul>
 <script>
+  function parseMMSS(mmss) {
+    const parsed = mmss.split(':').map(parseFloat);
+    return parsed[0]*60 + parsed[1];
+  }
+  function secsToHMS(secs) {
+      const hours = Math.floor(secs / 3600);
+      const minutes = Math.floor((secs % 3600) / 60);
+      const seconds = (secs % 3600) % 60;
+      return `${hours}:${minutes}:${seconds}`;
+  }
+  const times = Array.from(document.querySelectorAll('[data-time]'));
+  const totalTime = times
+    .map(time => time.dataset.time)
+    .map(parseMMSS)
+    .reduce((acc, t) => acc + t,0);
+  const totalTimeStr = secsToHMS(totalTime);
+  console.log(totalTimeStr);
 </script>
 </body>
 </html>
