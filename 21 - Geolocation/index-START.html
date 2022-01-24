@@ -59,6 +59,24 @@
     /*Compass: https://thenounproject.com/search/?q=compass&i=592352*/
   </style>
   <script>
-  </script>
+    const arrow = document.querySelector('.arrow');
+    const speeed = document.querySelector('.speed-value');
+
+    const baseSpeed = Math.floor(Math.random()*100);
+    const baseHeading = Math.floor(Math.random()*355 - 360/2);
+
+    function watchSpeed() {
+      return Math.floor(Math.random()*3) + baseSpeed;
+    }
+    
+    function watchHeading() {
+      return Math.floor(Math.random()*5) + baseHeading;
+    }
+    
+    setInterval(() => {
+      speeed.innerHTML = watchSpeed();
+      arrow.style.transform = `rotate(${watchHeading()}deg)`;
+    }, 500);
+      </script>
 </body>
 </html>
