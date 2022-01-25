@@ -26,7 +26,28 @@
     </div>
 
   <script>
-    // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+    const triggers = document.querySelectorAll('a');
+    const hightlight = document.createElement('span');
+    hightlight.classList.add('highlight');
+    document.body.appendChild(hightlight);
+
+    function highlightTrigger() {
+      const linkCoords = this.getBoundingClientRect();
+      const coords = {
+        height: linkCoords.height,
+        width: linkCoords.width,
+        top: linkCoords.top,
+        left: linkCoords.left
+      }
+      hightlight.style.height = `${coords.height}px`;
+      hightlight.style.width = `${coords.width}px`;
+      hightlight.style.top = `${coords.top + window.scrollY}px`; //original was done with translate
+      hightlight.style.left = `${coords.left + window.scrollX}px`;
+
+      // console.log(linkCoords);
+    }
+
+    triggers.forEach(t => t.addEventListener('mouseenter', highlightTrigger));
   </script>
 </body>
 </html>
